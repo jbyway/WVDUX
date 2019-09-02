@@ -95,7 +95,7 @@ try
                 }
                 }
                 	
-                $wvdInfraWebAppObjId = $serviceIdinfo.Id.Guid
+                $wvdInfraWebAppObjId = "7e8cdabb-6b89-4b74-be7d-0308d60887be"
                 #generate unique ID based on subscription ID
                 $unique_subscription_id = ($subscriptionid).Replace('-', '').substring(0, 19)
                 
@@ -115,7 +115,7 @@ try
                 }
 
                 #Collecting AzureService Management Api permission
-                $AzureServMgmtApi = Get-AzureRmADServicePrincipal -ApplicationId "797f4846-ba00-4fd7-ba43-dac1f8f63013"
+                <#$AzureServMgmtApi = Get-AzureRmADServicePrincipal -ApplicationId "797f4846-ba00-4fd7-ba43-dac1f8f63013"
                 $AzureAdServMgmtApi = Get-AzureADServicePrincipal -ObjectId $AzureServMgmtApi.Id.Guid
                 $AzureServMgmtApiResouceAcessObject = New-Object -TypeName "Microsoft.Open.AzureAD.Model.RequiredResourceAccess"
                 $AzureServMgmtApiResouceAcessObject.ResourceAppId = $AzureAdServMgmtApi.AppId
@@ -125,7 +125,8 @@ try
 
                 #Adding WVD Api Required Access and Azure Service Management Api required access Permissions to ClientAPP AD Application.
 				Set-AzureADApplication -ObjectId $clientAdApp.ObjectId -RequiredResourceAccess $AzureAdResouceAcessObject,$AzureServMgmtApiResouceAcessObject -ErrorAction Stop
-                }
+                #>
+            }
                 
         catch
         {

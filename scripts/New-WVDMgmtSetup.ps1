@@ -49,7 +49,7 @@ Import-Module AzureAD
        return $publishingCredentials
 } 
  
-	#Function to get KuduApiAuthorisationHeaderValue
+    #Function to get KuduApiAuthorisationHeaderValue
 	function Get-KuduApiAuthorisationHeaderValue($resourceGroupName, $webAppName, $slotName = $null){
     $publishingCredentials = Get-PublishingProfileCredentials $resourceGroupName $webAppName $slotName
     return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $publishingCredentials.Properties.PublishingUserName, $publishingCredentials.Properties.PublishingPassword))))
@@ -76,7 +76,7 @@ try
                 # Get Url of Web-App
                 $GetWebApp = Get-AzureRmWebApp -Name $WebApp -ResourceGroupName $ResourceGroupName
                 $WebUrl = $GetWebApp.DefaultHostName
-                 
+                Write-Output $GetWebApp.defaultHostName  
                 #$requiredAccessName=$ResourceURL.Split("/")[3]
                 $redirectURL="https://"+"$WebUrl"+"/"
                 
@@ -104,7 +104,7 @@ try
                 $wvdSaaS_clientapp_display_name = "wvdSaaS" + $ResourceGroupName.ToLowerInvariant() + $unique_subscription_id.ToLowerInvariant()
                 #Creating ClientApp Ad application in azure Active Directory
                 Connect-AzureAD -Credential $Cred
-                $clientAdApp = New-AzureADApplication -DisplayName $wvdSaaS_clientapp_display_name -ReplyUrls $redirectURL -PublicClient $true -AvailableToOtherTenants $false -Verbose -ErrorAction Stop
+                $clientAdApp = New-AzureADApplication -DisplayName $wvdSaaS_clientapp_display_name -ReplyUrls $redirectURL -PublicClient $true -AvailableToOtherTenants $true -Verbose -ErrorAction Stop
                 
                 #Collecting WVD Serviceprincipal Api Permission
                 $WVDServicePrincipal = Get-AzureADServicePrincipal -ObjectId $wvdInfraWebAppObjId #-SearchString $wvdInfraWebAppName | Where-Object {$_.DisplayName -eq $wvdInfraWebAppName}
